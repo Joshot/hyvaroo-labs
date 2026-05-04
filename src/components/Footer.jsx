@@ -1,40 +1,41 @@
-import { Linkedin, Github, Instagram } from 'lucide-react'
-
 export default function Footer() {
   return (
-    <footer style={{padding:'var(--space-10) 0 var(--space-12)',borderTop:'1px solid color-mix(in srgb,var(--color-border) 80%,transparent)'}}>
-      <div style={{width:'min(calc(100% - 2rem),var(--content-default))',marginInline:'auto'}}>
+    <footer style={{background:'var(--text)',color:'var(--ivory)',padding:'clamp(3rem,6vw,5rem) 0 clamp(2rem,4vw,3rem)'}}>
+      <div className="wrap">
         <div className="footer-grid">
-          <div>
-            <div style={{display:'inline-flex',alignItems:'center',gap:'var(--space-3)',fontWeight:800,letterSpacing:'-0.03em',marginBottom:'var(--space-4)'}}>
-              <span style={{background:'var(--gradient-accent)',WebkitBackgroundClip:'text',WebkitTextFillColor:'transparent',backgroundClip:'text',fontSize:'var(--text-lg)'}}>Hyvaroo Labs</span>
+          <div style={{display:'flex',flexDirection:'column',gap:'var(--sp-5)'}}>
+            <div>
+              <div style={{fontFamily:'var(--f-display)',fontSize:'var(--tx-lg)',fontWeight:600,letterSpacing:'-0.01em',color:'var(--ivory)'}}>Hyvaroo Labs</div>
+              <div style={{fontFamily:'var(--f-body)',fontSize:'var(--tx-xs)',fontWeight:600,letterSpacing:'0.14em',textTransform:'uppercase',color:'var(--gold)',marginTop:4}}>Software House</div>
             </div>
-            <p style={{color:'var(--color-text-muted)',maxWidth:'36ch'}}>High-value technology for businesses that need better digital direction and stronger execution.</p>
+            <p style={{color:'rgba(250,248,243,0.55)',fontSize:'var(--tx-sm)',maxWidth:'34ch',lineHeight:1.75}}>Premium digital products for companies that demand more than ordinary execution.</p>
           </div>
-          <div style={{display:'grid',gap:'var(--space-3)'}}>
-            <strong>Contact</strong>
-            <a href="mailto:hello@hyvaroolabs.com" style={{color:'var(--color-text-muted)'}}>hello@hyvaroolabs.com</a>
-            <a href="https://wa.me/6285159611202" target="_blank" rel="noopener noreferrer" style={{color:'var(--color-text-muted)'}}>+62 851-5961-1202</a>
+
+          <div style={{display:'grid',gap:'var(--sp-3)'}}>
+            <strong style={{fontSize:'var(--tx-xs)',letterSpacing:'0.12em',textTransform:'uppercase',color:'var(--gold)'}}>Navigation</strong>
+            {['#services','#portfolio','#about','#why-us','#contact'].map(h => (
+              <a key={h} href={h} style={{color:'rgba(250,248,243,0.65)',fontSize:'var(--tx-sm)',transition:'color var(--t)',textTransform:'capitalize'}} className="footer-lnk">{h.replace('#','')}</a>
+            ))}
           </div>
-          <div style={{display:'grid',gap:'var(--space-3)'}}>
-            <strong>Follow</strong>
-            <div style={{display:'flex',flexWrap:'wrap',gap:'var(--space-2)'}}>
-              {[
-                {href:'https://linkedin.com',icon:Linkedin,label:'LinkedIn'},
-                {href:'https://github.com',icon:Github,label:'GitHub'},
-                {href:'https://instagram.com',icon:Instagram,label:'Instagram'},
-              ].map(s => (
-                <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer"
-                  style={{minHeight:40,padding:'0.55rem 0.9rem',display:'inline-flex',alignItems:'center',gap:6,borderRadius:'var(--radius-full)',border:'1px solid var(--color-border)',background:'var(--color-surface)',color:'var(--color-text-muted)',fontSize:'var(--text-sm)'}}>
-                  <s.icon size={15}/>{s.label}
-                </a>
-              ))}
-            </div>
-            <p style={{color:'var(--color-text-muted)',fontSize:'var(--text-sm)',marginTop:'var(--space-2)'}}>© 2026 Hyvaroo Labs. Built with clarity and momentum.</p>
+
+          <div style={{display:'grid',gap:'var(--sp-3)'}}>
+            <strong style={{fontSize:'var(--tx-xs)',letterSpacing:'0.12em',textTransform:'uppercase',color:'var(--gold)'}}>Contact</strong>
+            <a href="mailto:hello@hyvaroolabs.com" style={{color:'rgba(250,248,243,0.65)',fontSize:'var(--tx-sm)'}} className="footer-lnk">hello@hyvaroolabs.com</a>
+            <a href="https://wa.me/6285159611202" target="_blank" rel="noopener noreferrer" style={{color:'rgba(250,248,243,0.65)',fontSize:'var(--tx-sm)'}} className="footer-lnk">+62 851-5961-1202</a>
+            <p style={{color:'rgba(250,248,243,0.35)',fontSize:'var(--tx-xs)',marginTop:'var(--sp-2)'}}>Jakarta, Indonesia</p>
           </div>
         </div>
+
+        <div style={{marginTop:'clamp(2rem,4vw,4rem)',paddingTop:'var(--sp-6)',borderTop:'1px solid rgba(250,248,243,0.1)',display:'flex',justifyContent:'space-between',flexWrap:'wrap',gap:'var(--sp-3)'}}>
+          <p style={{color:'rgba(250,248,243,0.35)',fontSize:'var(--tx-xs)'}}>© 2026 Hyvaroo Labs. All rights reserved.</p>
+          <p style={{color:'rgba(250,248,243,0.35)',fontSize:'var(--tx-xs)',fontStyle:'italic',fontFamily:'var(--f-display)'}}>Crafted with precision.</p>
+        </div>
       </div>
-      <style>{`.footer-grid{display:grid;gap:var(--space-8);}@media(min-width:768px){.footer-grid{grid-template-columns:1.2fr 0.8fr 0.8fr;align-items:start;}}`}</style>
+      <style>{`
+        .footer-grid{display:grid;gap:var(--sp-10);}
+        @media(min-width:768px){.footer-grid{grid-template-columns:1.4fr 0.8fr 0.8fr;}}
+        .footer-lnk:hover{color:var(--gold)!important;}
+      `}</style>
     </footer>
   )
 }

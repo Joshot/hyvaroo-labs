@@ -1,68 +1,62 @@
-import { ArrowUpRight, MessageCircle } from 'lucide-react'
+import { ArrowUpRight, ArrowDown } from 'lucide-react'
 
 export default function Hero() {
   return (
-    <section style={{padding:'clamp(5rem,14vw,8rem) 0 clamp(4rem,10vw,6rem)'}} id="top">
-      <div style={{width:'min(calc(100% - 2rem),var(--content-default))',marginInline:'auto'}}>
-        <div className="hero-grid">
-          <div>
-            <span style={{display:'inline-flex',alignItems:'center',gap:'var(--space-2)',padding:'0.45rem 0.85rem',borderRadius:'var(--radius-full)',background:'color-mix(in srgb,var(--color-surface) 84%,var(--color-accent-start) 16%)',border:'1px solid var(--color-accent-border)',color:'var(--color-text)',fontSize:'var(--text-xs)',letterSpacing:'0.08em',textTransform:'uppercase',fontWeight:700}}>
-              High-value digital growth
-            </span>
-            <h1 style={{fontSize:'var(--text-3xl)',lineHeight:0.97,letterSpacing:'-0.05em',marginTop:'var(--space-5)',maxWidth:'11ch'}}>
-              Building <span style={{background:'var(--gradient-accent)',WebkitBackgroundClip:'text',WebkitTextFillColor:'transparent',backgroundClip:'text'}}>Premium</span> Digital Products
-            </h1>
-            <p style={{marginTop:'var(--space-6)',maxWidth:'52ch',color:'var(--color-text-muted)',fontSize:'var(--text-lg)'}}>
-              We help startups and companies scale faster through high-performance web applications built with clarity, speed, and modern product standards.
-            </p>
-            <div style={{display:'flex',flexWrap:'wrap',gap:'var(--space-3)',marginTop:'var(--space-8)'}}>
-              <a href="https://wa.me/6285159611202" target="_blank" rel="noopener noreferrer"
-                style={{minHeight:52,padding:'0.9rem 1.4rem',display:'inline-flex',alignItems:'center',gap:6,borderRadius:'var(--radius-full)',fontSize:'var(--text-sm)',fontWeight:700,background:'var(--gradient-accent)',color:'white',boxShadow:'var(--shadow-lg)',textDecoration:'none'}}>
-                <ArrowUpRight size={18}/>Start a Project
-              </a>
-              <a href="https://wa.me/6285159611202" target="_blank" rel="noopener noreferrer"
-                style={{minHeight:52,padding:'0.9rem 1.4rem',display:'inline-flex',alignItems:'center',gap:6,borderRadius:'var(--radius-full)',fontSize:'var(--text-sm)',fontWeight:700,background:'var(--color-surface)',color:'var(--color-text)',border:'1px solid var(--color-border)',textDecoration:'none'}}>
-                <MessageCircle size={18}/>Chat on WhatsApp
-              </a>
-            </div>
-            <div style={{display:'flex',flexWrap:'wrap',gap:'var(--space-4)',marginTop:'var(--space-8)',color:'var(--color-text-muted)',fontSize:'var(--text-sm)'}}>
-              <span>⚡ Scalable architecture</span>
-              <span>🎯 Performance-first</span>
-              <span>✨ Global startup aesthetic</span>
-            </div>
+    <section id="top" style={{position:'relative',overflow:'hidden',minHeight:'96vh',display:'flex',flexDirection:'column',justifyContent:'center',background:'var(--ivory)'}}>
+
+      {/* Background texture lines */}
+      <div aria-hidden="true" style={{position:'absolute',inset:0,backgroundImage:'repeating-linear-gradient(0deg,transparent,transparent 79px,rgba(184,150,90,0.06) 80px),repeating-linear-gradient(90deg,transparent,transparent 79px,rgba(184,150,90,0.06) 80px)',backgroundSize:'80px 80px',pointerEvents:'none'}} />
+
+      {/* Soft radial light */}
+      <div aria-hidden="true" style={{position:'absolute',top:'-10%',right:'-5%',width:'55%',height:'70%',background:'radial-gradient(ellipse,rgba(212,170,106,0.12) 0%,transparent 65%)',pointerEvents:'none'}} />
+
+      <div className="wrap" style={{position:'relative',zIndex:1,paddingTop:'var(--sp-16)',paddingBottom:'var(--sp-16)'}}>
+
+        <div style={{display:'grid',gap:'var(--sp-6)',maxWidth:'820px'}}>
+          <div style={{display:'flex',alignItems:'center',gap:'var(--sp-4)'}}>
+            <span className="eyebrow">Est. 2024</span>
+            <span style={{display:'block',width:32,height:1,background:'linear-gradient(90deg,var(--gold),transparent)'}} />
+            <span className="eyebrow">Jakarta, Indonesia</span>
           </div>
 
-          <div className="hero-card">
-            <div style={{position:'relative',zIndex:1,display:'grid',gap:'var(--space-5)'}}>
-              <div style={{padding:'var(--space-5)',borderRadius:22,background:'color-mix(in srgb,var(--color-surface) 88%,transparent)',border:'1px solid var(--color-border)'}}>
-                <span style={{color:'var(--color-text-muted)',fontSize:'var(--text-sm)'}}>What we deliver</span>
-                <strong style={{display:'block',marginTop:'0.45rem',fontSize:'var(--text-lg)',letterSpacing:'-0.03em',lineHeight:1.2}}>High-value technology with clear forward direction.</strong>
-              </div>
-              <div style={{display:'grid',gridTemplateColumns:'repeat(2,1fr)',gap:'var(--space-4)'}}>
-                <div style={{padding:'var(--space-5)',borderRadius:22,background:'color-mix(in srgb,var(--color-surface) 88%,transparent)',border:'1px solid var(--color-border)'}}>
-                  <span style={{color:'var(--color-text-muted)',fontSize:'var(--text-sm)'}}>Delivery</span>
-                  <strong style={{display:'block',fontSize:'var(--text-xl)',letterSpacing:'-0.04em',background:'var(--gradient-accent)',WebkitBackgroundClip:'text',WebkitTextFillColor:'transparent',backgroundClip:'text'}}>Fast</strong>
-                </div>
-                <div style={{padding:'var(--space-5)',borderRadius:22,background:'color-mix(in srgb,var(--color-surface) 88%,transparent)',border:'1px solid var(--color-border)'}}>
-                  <span style={{color:'var(--color-text-muted)',fontSize:'var(--text-sm)'}}>Quality</span>
-                  <strong style={{display:'block',fontSize:'var(--text-xl)',letterSpacing:'-0.04em',background:'var(--gradient-accent)',WebkitBackgroundClip:'text',WebkitTextFillColor:'transparent',backgroundClip:'text'}}>Premium</strong>
-                </div>
-                <div style={{gridColumn:'span 2',padding:'var(--space-5)',borderRadius:22,background:'color-mix(in srgb,var(--color-surface) 88%,transparent)',border:'1px solid var(--color-border)'}}>
-                  <span style={{color:'var(--color-text-muted)',fontSize:'var(--text-sm)'}}>Systems</span>
-                  <strong style={{display:'block',fontSize:'var(--text-lg)',letterSpacing:'-0.03em'}}>Scale-ready from day one</strong>
-                </div>
-              </div>
-            </div>
+          <h1 style={{fontFamily:'var(--f-display)',fontSize:'var(--tx-hero)',lineHeight:0.95,letterSpacing:'-0.04em',fontWeight:300,color:'var(--text)'}}>
+            We craft<br/>
+            <em style={{fontStyle:'italic',fontWeight:300}}>exceptional</em><br/>
+            <span style={{color:'var(--gold)',fontWeight:400}}>digital work.</span>
+          </h1>
+
+          <p style={{fontSize:'var(--tx-md)',color:'var(--text-2)',maxWidth:'52ch',fontWeight:300,lineHeight:1.8,marginTop:'var(--sp-2)'}}>
+            Hyvaroo Labs is a premium software house. We build high-performance web products for founders and companies who demand more than ordinary.
+          </p>
+
+          <div style={{display:'flex',flexWrap:'wrap',gap:'var(--sp-3)',marginTop:'var(--sp-4)'}}>
+            <a href="https://wa.me/6285159611202" target="_blank" rel="noopener noreferrer" className="btn-primary">
+              Start a Project <ArrowUpRight size={16}/>
+            </a>
+            <a href="#portfolio" className="btn-outline">View Work</a>
           </div>
+
+          <div style={{display:'flex',flexWrap:'wrap',gap:'var(--sp-8)',marginTop:'var(--sp-6)',paddingTop:'var(--sp-6)',borderTop:'1px solid var(--ivory-border)'}}>
+            {[['Scalable','Architecture'],['Premium','UI/UX'],['Fast','Delivery'],['Modern','Standards']].map(([a,b]) => (
+              <div key={a}>
+                <div style={{fontFamily:'var(--f-display)',fontSize:'var(--tx-lg)',fontWeight:600,lineHeight:1,color:'var(--text)'}}>{a}</div>
+                <div style={{fontSize:'var(--tx-xs)',fontWeight:600,letterSpacing:'0.12em',textTransform:'uppercase',color:'var(--gold)',marginTop:4}}>{b}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Floating index number */}
+        <div aria-hidden="true" style={{position:'absolute',right:0,top:'50%',transform:'translateY(-50%)',display:'none',flexDirection:'column',alignItems:'center',gap:'var(--sp-3)'}} className="hero-index">
+          <span style={{writingMode:'vertical-rl',fontFamily:'var(--f-body)',fontSize:'var(--tx-xs)',letterSpacing:'0.14em',textTransform:'uppercase',color:'var(--text-4)'}}>Scroll to explore</span>
+          <ArrowDown size={14} style={{color:'var(--text-4)'}}/>
         </div>
       </div>
 
-      <style>{`
-        .hero-grid{display:grid;gap:var(--space-10);align-items:center;}
-        .hero-card{position:relative;overflow:hidden;padding:clamp(1.5rem,4vw,2rem);border-radius:28px;background:linear-gradient(180deg,color-mix(in srgb,var(--color-surface) 88%,transparent),color-mix(in srgb,var(--color-surface-2) 94%,transparent));border:1px solid color-mix(in srgb,var(--color-accent-border) 80%,var(--color-border));box-shadow:var(--shadow-md);min-height:340px;}
-        .hero-card::before{content:"";position:absolute;inset:auto -10% -28% auto;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(138,92,255,0.35),transparent 65%);filter:blur(10px);}
-        @media(min-width:980px){.hero-grid{grid-template-columns:1.15fr 0.85fr;}}
-      `}</style>
+      {/* Large faded number */}
+      <div aria-hidden="true" style={{position:'absolute',right:'-2%',bottom:'-4%',fontFamily:'var(--f-display)',fontSize:'clamp(8rem,18vw,22rem)',fontWeight:700,lineHeight:1,color:'transparent',WebkitTextStroke:'1px rgba(184,150,90,0.12)',pointerEvents:'none',userSelect:'none',letterSpacing:'-0.06em'}}>01</div>
+
+      <style>{`@media(min-width:900px){.hero-index{display:flex!important;}}`}</style>
     </section>
   )
 }

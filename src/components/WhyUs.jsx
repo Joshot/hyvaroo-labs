@@ -1,38 +1,41 @@
-import { Cpu, Layers3, Sparkles, Zap } from 'lucide-react'
+import { ArrowUpRight } from 'lucide-react'
 
-const reasons = [
-  {icon:Cpu,    title:'High performance code',  desc:'Lean front-end output and implementation choices that keep products fast and stable.'},
-  {icon:Layers3,title:'Scalable architecture',   desc:'Technical foundations that support future features without forcing rebuilds too early.'},
-  {icon:Sparkles,title:'Clean UI/UX',            desc:'Interfaces that feel premium, readable, and globally aligned with modern startup standards.'},
-  {icon:Zap,    title:'Fast delivery',            desc:'Focused scope and practical execution to get working products into motion faster.'},
+const points = [
+  {title:'High-performance engineering',desc:'Lean, fast, and stable code that holds up under real usage — not just during development.'},
+  {title:'Strategic UI/UX',desc:'Interfaces designed around user intent, not decoration. Every element earns its place.'},
+  {title:'Scalable from day one',desc:'Architecture decisions that let products grow without expensive rewrites.'},
+  {title:'Delivery with discipline',desc:'Scoped clearly, executed precisely. No scope creep, no missed timelines.'},
+  {title:'Premium attention to detail',desc:'The difference between good and exceptional is in the small decisions — and we never skip them.'},
+  {title:'Partnership mentality',desc:'We treat every project as if it's our own product — with care, ownership, and long-term thinking.'},
 ]
 
 export default function WhyUs() {
   return (
-    <section id="why-us" style={{padding:'clamp(4rem,10vw,6rem) 0'}}>
-      <div style={{width:'min(calc(100% - 2rem),var(--content-default))',marginInline:'auto'}}>
-        <div className="section-head">
-          <div>
-            <span className="eyebrow">Why choose us</span>
-            <h2 style={{fontFamily:'var(--font-display)',fontSize:'var(--text-2xl)',lineHeight:1.05,letterSpacing:'-0.04em',maxWidth:'15ch',marginTop:'var(--space-4)'}}>Built for teams that care about speed and quality.</h2>
-          </div>
-          <p style={{maxWidth:'52ch',color:'var(--color-text-muted)',marginTop:0}}>Credible execution, thoughtful product detail, and a delivery style that feels modern from day one.</p>
+    <section id="why-us" style={{padding:'clamp(5rem,10vw,8rem) 0',background:'var(--ivory-warm)',borderTop:'1px solid var(--ivory-border)'}}>
+      <div className="wrap">
+        <div style={{display:'flex',flexDirection:'column',gap:'var(--sp-3)',marginBottom:'var(--sp-16)'}}>
+          <span className="eyebrow">Why Hyvaroo</span>
+          <h2 style={{fontSize:'var(--tx-xl)',fontWeight:300,maxWidth:'14ch'}}>The standard<br/><em>we hold ourselves to.</em></h2>
+          <span className="gold-rule"/>
         </div>
-        <div className="choose-grid">
-          {reasons.map(({icon:Icon,title,desc}) => (
-            <article key={title} className="glass-card">
-              <h3 style={{display:'flex',alignItems:'center',gap:'var(--space-3)',fontSize:'var(--text-lg)',letterSpacing:'-0.03em'}}>
-                <Icon size={20} style={{flexShrink:0,color:'var(--color-accent-start)'}}/>{title}
-              </h3>
-              <p style={{marginTop:'var(--space-3)',color:'var(--color-text-muted)'}}>{desc}</p>
-            </article>
+
+        <div className="why-grid">
+          {points.map(({title,desc}) => (
+            <div key={title} style={{display:'flex',flexDirection:'column',gap:'var(--sp-3)',padding:'var(--sp-6)',border:'1px solid var(--ivory-border)',borderRadius:'var(--r-lg)',background:'var(--ivory)',transition:'all var(--t) var(--ease)'}} className="why-card">
+              <div style={{display:'flex',alignItems:'flex-start',justifyContent:'space-between',gap:'var(--sp-3)'}}>
+                <h3 style={{fontFamily:'var(--f-display)',fontSize:'var(--tx-md)',fontWeight:500,lineHeight:1.2}}>{title}</h3>
+                <ArrowUpRight size={15} style={{color:'var(--gold)',flexShrink:0,marginTop:4}}/>
+              </div>
+              <p style={{color:'var(--text-2)',fontSize:'var(--tx-sm)',lineHeight:1.75}}>{desc}</p>
+            </div>
           ))}
         </div>
       </div>
       <style>{`
-        .choose-grid{display:grid;gap:var(--space-4);}
-        @media(min-width:768px){.choose-grid{grid-template-columns:repeat(2,1fr);}}
-        @media(min-width:980px){.choose-grid{grid-template-columns:repeat(4,1fr);}}
+        .why-grid{display:grid;gap:var(--sp-4);}
+        @media(min-width:680px){.why-grid{grid-template-columns:repeat(2,1fr);}}
+        @media(min-width:980px){.why-grid{grid-template-columns:repeat(3,1fr);}}
+        .why-card:hover{background:var(--ivory-warm)!important;box-shadow:0 6px 28px rgba(26,22,16,0.06),0 1px 0 rgba(184,150,90,0.15)!important;}
       `}</style>
     </section>
   )

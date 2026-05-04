@@ -1,41 +1,42 @@
-const projects = [
-  { title:'SaaS Analytics Platform', desc:'Enterprise-style dashboard for monitoring growth, retention, and customer behavior across multiple channels.', tags:['Dashboard','Data UI','Performance'], grad:'linear-gradient(135deg,rgba(79,140,255,0.18),rgba(138,92,255,0.2))' },
-  { title:'Startup Marketing Site', desc:'Conversion-led company site with premium visuals, responsive storytelling, and fast-loading front-end execution.', tags:['Brand site','SEO','Responsive'], grad:'linear-gradient(135deg,rgba(138,92,255,0.2),rgba(79,140,255,0.12))' },
-  { title:'B2B Operations Portal', desc:'Internal tools experience focused on clarity, workflow speed, and architecture ready for future product expansion.', tags:['Portal','Workflow','Scalable'], grad:'linear-gradient(135deg,rgba(79,140,255,0.16),rgba(10,15,28,0.16))' },
-  { title:'High-Performance Landing', desc:'Reusable design and section framework crafted for startups that need faster launches with premium visual consistency.', tags:['System','Reusable','Launch-ready'], grad:'linear-gradient(135deg,rgba(10,15,28,0.16),rgba(138,92,255,0.24))' },
+const work = [
+  {n:'01',title:'SaaS Analytics Platform',   cat:'Dashboard · Data UI',   year:'2025',desc:'Enterprise dashboard with real-time metrics, custom charting, and multi-tenant architecture built for a B2B analytics startup.'},
+  {n:'02',title:'Startup Marketing Site',    cat:'Brand · SEO · Motion',  year:'2025',desc:'Conversion-focused company site with editorial layout, premium motion, and performance scores in the top 5% globally.'},
+  {n:'03',title:'B2B Operations Portal',     cat:'Portal · Workflow',     year:'2024',desc:'Internal operations tool for a logistics company — role-based access, real-time updates, and a clean data-dense UI.'},
+  {n:'04',title:'E-Commerce Experience',    cat:'E-Commerce · UX',       year:'2024',desc:'Premium shopping experience with editorial product presentation, seamless checkout, and mobile-first interaction design.'},
 ]
 
 export default function Portfolio() {
   return (
-    <section id="portfolio" style={{padding:'clamp(4rem,10vw,6rem) 0'}}>
-      <div style={{width:'min(calc(100% - 2rem),var(--content-default))',marginInline:'auto'}}>
-        <div className="section-head">
-          <div>
-            <span className="eyebrow">Selected work</span>
-            <h2 style={{fontFamily:'var(--font-display)',fontSize:'var(--text-2xl)',lineHeight:1.05,letterSpacing:'-0.04em',maxWidth:'16ch',marginTop:'var(--space-4)'}}>A compact portfolio with a modern product lens.</h2>
+    <section id="portfolio" style={{padding:'clamp(5rem,10vw,8rem) 0',background:'var(--ivory-warm)',borderTop:'1px solid var(--ivory-border)'}}>
+      <div className="wrap">
+        <div style={{display:'flex',justifyContent:'space-between',alignItems:'flex-end',flexWrap:'wrap',gap:'var(--sp-8)',marginBottom:'var(--sp-16)'}}>
+          <div style={{display:'flex',flexDirection:'column',gap:'var(--sp-3)'}}>
+            <span className="eyebrow">Selected Work</span>
+            <h2 style={{fontSize:'var(--tx-xl)',fontWeight:300,maxWidth:'13ch'}}>Work that<br/><em>speaks for itself.</em></h2>
           </div>
-          <p style={{maxWidth:'52ch',color:'var(--color-text-muted)',marginTop:0}}>Project cards are intentionally clean so the work feels structured, credible, and current.</p>
+          <span className="gold-rule" style={{margin:0,width:64}}/>
         </div>
-        <div className="portfolio-grid">
-          {projects.map(p => (
-            <article key={p.title} className="glass-card">
-              <div style={{aspectRatio:'16/9',borderRadius:18,overflow:'hidden',position:'relative',background:p.grad,border:'1px solid rgba(255,255,255,0.06)',marginBottom:'var(--space-5)'}}>
-                <div style={{position:'absolute',inset:'12% 10% auto',height:'52%',background:'rgba(10,15,28,0.82)',borderRadius:16,boxShadow:'0 12px 32px rgba(10,15,28,0.24)'}}/>
-                <div style={{position:'absolute',inset:'auto 12% 12% 24%',height:'28%',background:'rgba(248,250,252,0.9)',borderRadius:14,boxShadow:'0 6px 18px rgba(79,140,255,0.12)'}}/>
+
+        <div style={{display:'grid',gap:'var(--sp-3)'}}>
+          {work.map(({n,title,cat,year,desc},i) => (
+            <div key={title} className="port-row" style={{display:'grid',gap:'var(--sp-5)',padding:'var(--sp-8)',borderRadius:'var(--r-lg)',border:'1px solid var(--ivory-border)',background:'var(--ivory)',transition:'all var(--t) var(--ease)',cursor:'default'}}>
+              <div style={{display:'grid',alignItems:'start'}} className="port-inner">
+                <div style={{display:'flex',alignItems:'baseline',gap:'var(--sp-4)'}}>
+                  <span style={{fontFamily:'var(--f-display)',fontSize:'var(--tx-xs)',color:'var(--gold)',fontWeight:600,letterSpacing:'0.1em',minWidth:24}}>{n}</span>
+                  <div>
+                    <h3 style={{fontFamily:'var(--f-display)',fontSize:'var(--tx-lg)',fontWeight:400,lineHeight:1.1}}>{title}</h3>
+                    <p style={{color:'var(--text-3)',fontSize:'var(--tx-xs)',marginTop:'var(--sp-1)',letterSpacing:'0.06em',textTransform:'uppercase',fontWeight:600}}>{cat} · {year}</p>
+                  </div>
+                </div>
+                <p style={{color:'var(--text-2)',fontSize:'var(--tx-base)',maxWidth:'56ch'}}>{desc}</p>
               </div>
-              <h3 style={{fontSize:'var(--text-lg)',letterSpacing:'-0.03em'}}>{p.title}</h3>
-              <p style={{marginTop:'var(--space-3)',color:'var(--color-text-muted)'}}>{p.desc}</p>
-              <div style={{display:'flex',flexWrap:'wrap',gap:'var(--space-2)',marginTop:'var(--space-4)'}}>
-                {p.tags.map(t => <span key={t} style={{display:'inline-flex',alignItems:'center',minHeight:28,padding:'0.3rem 0.7rem',borderRadius:'var(--radius-full)',background:'color-mix(in srgb,var(--color-surface-2) 70%,var(--color-accent-start) 30%)',color:'var(--color-text-muted)',fontSize:'var(--text-xs)',border:'1px solid color-mix(in srgb,var(--color-accent-border) 80%,transparent)'}}>{t}</span>)}
-              </div>
-            </article>
+              {/* Visual swatch */}
+              <div style={{height:3,borderRadius:'var(--r-full)',background:`linear-gradient(90deg, var(--gold-light), var(--gold-deep), var(--ivory-deep))`,opacity: 0.7+i*0.08}} />
+            </div>
           ))}
         </div>
       </div>
-      <style>{`
-        .portfolio-grid{display:grid;gap:var(--space-4);}
-        @media(min-width:768px){.portfolio-grid{grid-template-columns:repeat(2,1fr);}}
-      `}</style>
+      <style>{`.port-row:hover{background:var(--ivory-warm)!important;box-shadow:0 8px 40px rgba(26,22,16,0.06),0 1px 0 rgba(184,150,90,0.2)!important;transform:translateY(-2px);}.port-inner{gap:var(--sp-4);}@media(min-width:900px){.port-inner{grid-template-columns:1fr 1fr;}}`}</style>
     </section>
   )
 }
