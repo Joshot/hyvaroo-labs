@@ -4,7 +4,7 @@ import { Menu, X } from 'lucide-react'
 const links = [
   { href: '#services',  label: 'Services'  },
   { href: '#portfolio', label: 'Portfolio' },
-  { href: '#about',     label: 'About'     },
+  { href: '#manifesto', label: 'About'     },
   { href: '#why-us',    label: 'Why Us'    },
   { href: '#contact',   label: 'Contact'   },
 ]
@@ -14,211 +14,153 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20)
-    window.addEventListener('scroll', onScroll)
-    return () => window.removeEventListener('scroll', onScroll)
+    const fn = () => setScrolled(window.scrollY > 40)
+    window.addEventListener('scroll', fn)
+    return () => window.removeEventListener('scroll', fn)
   }, [])
 
   return (
     <>
       <style>{`
-        .nav-header {
-          position: sticky;
-          top: 0;
-          z-index: 100;
-          transition: all 280ms cubic-bezier(0.16,1,0.3,1);
+        .nav {
+          position: fixed;
+          top: 0; left: 0; right: 0;
+          z-index: 200;
+          transition: background 400ms, border-color 400ms, backdrop-filter 400ms;
         }
-        .nav-header.scrolled {
-          background: rgba(250,248,243,0.94);
-          backdrop-filter: blur(20px) saturate(1.4);
-          -webkit-backdrop-filter: blur(20px) saturate(1.4);
-          border-bottom: 1px solid #ddd8ce;
+        .nav.scrolled {
+          background: rgba(8,7,10,0.82);
+          backdrop-filter: blur(24px) saturate(1.6);
+          -webkit-backdrop-filter: blur(24px) saturate(1.6);
+          border-bottom: 1px solid rgba(201,169,110,0.12);
         }
-        .nav-header.top {
-          background: transparent;
-          border-bottom: 1px solid transparent;
-        }
-        .nav-wrap {
-          width: min(calc(100% - 3rem), 1080px);
+        .nav-inner {
+          width: min(calc(100% - 2.5rem), 1100px);
           margin-inline: auto;
           display: flex;
           align-items: center;
           justify-content: space-between;
-          min-height: 72px;
+          height: 76px;
         }
-        .nav-logo {
-          display: flex;
-          flex-direction: column;
-          line-height: 1.1;
-          text-decoration: none;
-        }
-        .nav-logo-name {
+        .nav-logo { text-decoration: none; display: flex; flex-direction: column; line-height: 1.1; }
+        .nav-name {
           font-family: 'Cormorant Garamond', Georgia, serif;
-          font-size: clamp(1.05rem, 1rem + 0.4vw, 1.35rem);
+          font-size: clamp(1rem, 0.9rem + 0.4vw, 1.3rem);
           font-weight: 600;
-          letter-spacing: -0.01em;
-          color: #1a1610;
+          letter-spacing: 0.02em;
+          color: #f0ede8;
         }
-        .nav-logo-sub {
-          font-family: 'DM Sans', system-ui, sans-serif;
-          font-size: 0.7rem;
+        .nav-sub {
+          font-size: 0.62rem;
           font-weight: 600;
-          letter-spacing: 0.14em;
+          letter-spacing: 0.16em;
           text-transform: uppercase;
-          color: #b8965a;
+          color: #c9a96e;
         }
         .nav-links {
           display: none;
           align-items: center;
           gap: 2.5rem;
-          list-style: none;
         }
         .nav-links a {
-          font-family: 'DM Sans', system-ui, sans-serif;
-          font-size: 0.88rem;
+          font-size: 0.78rem;
           font-weight: 500;
-          letter-spacing: 0.04em;
-          color: #4a4030;
+          letter-spacing: 0.06em;
+          color: rgba(240,237,232,0.65);
           text-decoration: none;
           transition: color 200ms;
+          position: relative;
         }
-        .nav-links a:hover { color: #8a6a38; }
+        .nav-links a::after {
+          content: '';
+          position: absolute;
+          bottom: -3px; left: 0; right: 0;
+          height: 1px;
+          background: #c9a96e;
+          transform: scaleX(0);
+          transform-origin: left;
+          transition: transform 250ms cubic-bezier(0.16,1,0.3,1);
+        }
+        .nav-links a:hover { color: #f0ede8; }
+        .nav-links a:hover::after { transform: scaleX(1); }
         .nav-cta {
           display: none;
           align-items: center;
           justify-content: center;
-          min-height: 42px;
+          height: 40px;
           padding: 0 1.4rem;
-          border-radius: 9999px;
-          font-family: 'DM Sans', system-ui, sans-serif;
-          font-size: 0.72rem;
+          border-radius: 4px;
+          font-size: 0.7rem;
           font-weight: 600;
-          letter-spacing: 0.07em;
+          letter-spacing: 0.1em;
           text-transform: uppercase;
-          background: #1a1610;
-          color: #faf8f3;
+          background: linear-gradient(135deg, #c9a96e, #a07840);
+          color: #08070a;
           text-decoration: none;
-          border: 1.5px solid #1a1610;
-          transition: background 200ms, transform 200ms, box-shadow 200ms;
+          transition: transform 200ms, box-shadow 200ms;
         }
         .nav-cta:hover {
-          background: #8a6a38;
-          border-color: #8a6a38;
           transform: translateY(-1px);
-          box-shadow: 0 8px 24px rgba(184,150,90,0.22);
+          box-shadow: 0 6px 24px rgba(201,169,110,0.35);
         }
-        .nav-hamburger {
+        .hamburger {
           display: inline-flex;
           align-items: center;
           justify-content: center;
-          width: 44px;
-          height: 44px;
-          border-radius: 10px;
-          border: 1px solid #ddd8ce;
-          background: #f5f0e8;
-          cursor: pointer;
-          color: #1a1610;
+          width: 44px; height: 44px;
+          border-radius: 4px;
+          border: 1px solid rgba(240,237,232,0.15);
+          color: #f0ede8;
         }
-        .mob-menu {
-          background: #faf8f3;
-          border-top: 1px solid #ddd8ce;
-          padding: 1rem 1.5rem 1.5rem;
+        .mob-nav {
+          background: rgba(8,7,10,0.97);
+          backdrop-filter: blur(20px);
+          border-top: 1px solid rgba(201,169,110,0.12);
+          padding: 1rem 1.25rem 1.5rem;
         }
-        .mob-menu a.mob-link {
+        .mob-link {
           display: block;
-          padding: 0.75rem 0;
+          padding: 1rem 0;
           font-family: 'Cormorant Garamond', Georgia, serif;
-          font-size: 1.3rem;
-          font-weight: 400;
-          border-bottom: 1px solid #ddd8ce;
-          color: #1a1610;
+          font-size: 1.6rem;
+          font-weight: 300;
+          color: rgba(240,237,232,0.8);
           text-decoration: none;
-          transition: color 180ms;
+          border-bottom: 1px solid rgba(240,237,232,0.06);
+          transition: color 200ms;
         }
-        .mob-menu a.mob-link:hover { color: #b8965a; }
-        .mob-cta {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          margin-top: 1.25rem;
-          min-height: 48px;
-          border-radius: 9999px;
-          font-family: 'DM Sans', system-ui, sans-serif;
-          font-size: 0.8rem;
-          font-weight: 600;
-          letter-spacing: 0.07em;
-          text-transform: uppercase;
-          background: #1a1610;
-          color: #faf8f3;
-          text-decoration: none;
-        }
+        .mob-link:hover { color: #c9a96e; }
         @media (min-width: 900px) {
-          .nav-links    { display: flex !important; }
-          .nav-cta      { display: inline-flex !important; }
-          .nav-hamburger{ display: none !important; }
-        }
-        @media (max-width: 899px) {
-          .nav-links    { display: none !important; }
-          .nav-cta      { display: none !important; }
-          .nav-hamburger{ display: inline-flex !important; }
+          .nav-links { display: flex !important; }
+          .nav-cta   { display: inline-flex !important; }
+          .hamburger { display: none !important; }
         }
       `}</style>
 
-      <header className={`nav-header ${scrolled ? 'scrolled' : 'top'}`}>
-        <div className="nav-wrap">
-
+      <header className={`nav${scrolled ? ' scrolled' : ''}`}>
+        <div className="nav-inner">
           <a href="#top" className="nav-logo">
-            <span className="nav-logo-name">Hyvaroo Labs</span>
-            <span className="nav-logo-sub">Software House</span>
+            <span className="nav-name">Hyvaroo Labs</span>
+            <span className="nav-sub">Software House</span>
           </a>
-
           <nav aria-label="primary">
             <ul className="nav-links">
-              {links.map(l => (
-                <li key={l.href}><a href={l.href}>{l.label}</a></li>
-              ))}
+              {links.map(l => <li key={l.href}><a href={l.href}>{l.label}</a></li>)}
             </ul>
           </nav>
-
           <div style={{ display:'flex', alignItems:'center', gap:'0.75rem' }}>
-            <a
-              href="https://wa.me/6285159611202"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="nav-cta"
-            >
-              Let's Talk
-            </a>
-            <button
-              className="nav-hamburger"
-              onClick={() => setOpen(v => !v)}
-              aria-label={open ? 'Close menu' : 'Open menu'}
-            >
+            <a href="https://wa.me/6285159611202" target="_blank" rel="noopener noreferrer" className="nav-cta">Let&apos;s Talk</a>
+            <button className="hamburger" onClick={() => setOpen(v => !v)} aria-label={open ? 'Close menu' : 'Open menu'}>
               {open ? <X size={18} /> : <Menu size={18} />}
             </button>
           </div>
         </div>
-
         {open && (
-          <div className="mob-menu">
+          <div className="mob-nav">
             {links.map(l => (
-              <a
-                key={l.href}
-                href={l.href}
-                className="mob-link"
-                onClick={() => setOpen(false)}
-              >
-                {l.label}
-              </a>
+              <a key={l.href} href={l.href} className="mob-link" onClick={() => setOpen(false)}>{l.label}</a>
             ))}
-            <a
-              href="https://wa.me/6285159611202"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mob-cta"
-            >
-              Let's Talk
-            </a>
+            <a href="https://wa.me/6285159611202" target="_blank" rel="noopener noreferrer" className="btn-glow" style={{ marginTop:'1.25rem', width:'100%', justifyContent:'center' }}>Let&apos;s Talk</a>
           </div>
         )}
       </header>

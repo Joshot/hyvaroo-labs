@@ -1,137 +1,150 @@
-import { Code2, Layers, Pen, Zap } from 'lucide-react'
+import { useEffect, useRef } from 'react'
+import { Code2, Layers, PenTool, Zap } from 'lucide-react'
 
 const svcs = [
-  {
-    n: '01', Icon: Code2,
-    title: 'Web Development',
-    desc: 'End-to-end digital products engineered for speed, reliability, and long-term scalability with meticulous technical detail.',
-  },
-  {
-    n: '02', Icon: Layers,
-    title: 'Frontend Engineering',
-    desc: 'Component systems and polished interfaces built with clean code, modern tooling, and precision interaction design.',
-  },
-  {
-    n: '03', Icon: Pen,
-    title: 'UI / UX Design',
-    desc: 'Strategy-led design that converts — minimal, intentional, and tuned to the expectations of a global audience.',
-  },
-  {
-    n: '04', Icon: Zap,
-    title: 'Performance & Scale',
-    desc: 'Architecture audits, optimizations, and front-end performance that meets enterprise-grade standards under real load.',
-  },
+  { n:'01', Icon: Code2,    title: 'Web Development',      desc: 'End-to-end digital products engineered for speed, reliability, and long-term scalability with meticulous technical craft.' },
+  { n:'02', Icon: Layers,   title: 'Frontend Engineering',  desc: 'Component systems and polished interfaces built with clean code, modern tooling, and precision interaction design.' },
+  { n:'03', Icon: PenTool,  title: 'UI / UX Design',        desc: 'Strategy-led design that converts. Minimal, intentional, and tuned to the expectations of a global product audience.' },
+  { n:'04', Icon: Zap,      title: 'Performance & Scale',   desc: 'Architecture audits, load optimization, and front-end engineering that meets enterprise-grade standards under pressure.' },
 ]
 
+function useReveal() {
+  const ref = useRef(null)
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target) } })
+    }, { threshold: 0.15 })
+    el.querySelectorAll('.reveal').forEach(r => obs.observe(r))
+    return () => obs.disconnect()
+  }, [])
+  return ref
+}
+
 export default function Services() {
+  const ref = useReveal()
   return (
     <>
       <style>{`
         .svc-section {
-          padding: clamp(5rem, 10vw, 8rem) 0;
-          border-top: 1px solid #ddd8ce;
-          background: #faf8f3;
+          padding: clamp(6rem, 12vw, 10rem) 0;
+          background: #08070a;
+          border-top: 1px solid rgba(240,237,232,0.05);
+          position: relative;
+          overflow: hidden;
+        }
+        .svc-section::before {
+          content: '';
+          position: absolute;
+          top: -20%;
+          left: -10%;
+          width: 60%;
+          height: 60%;
+          background: radial-gradient(ellipse, rgba(201,169,110,0.04) 0%, transparent 65%);
+          pointer-events: none;
         }
         .svc-header {
           display: flex;
           flex-direction: column;
-          gap: 0.75rem;
-          margin-bottom: 4rem;
+          gap: 1rem;
+          margin-bottom: 5rem;
         }
         .svc-h2 {
           font-family: 'Cormorant Garamond', Georgia, serif;
-          font-size: clamp(2rem, 1.2rem + 3.5vw, 4.2rem);
+          font-size: clamp(2.2rem, 1rem + 4vw, 5rem);
           font-weight: 300;
-          line-height: 1.0;
-          color: #1a1610;
-          max-width: 14ch;
+          line-height: 0.95;
+          letter-spacing: -0.03em;
+          color: #f0ede8;
+          max-width: 12ch;
         }
         .svc-h2 em { font-style: italic; }
-        .gold-rule {
-          display: block;
-          width: 48px;
-          height: 1px;
-          background: linear-gradient(90deg, transparent, #b8965a, transparent);
-        }
-        .svc-list {
-          border: 1px solid #ddd8ce;
-          border-radius: 20px;
+        .svc-grid {
+          display: grid;
+          gap: 1px;
+          background: rgba(240,237,232,0.06);
+          border: 1px solid rgba(240,237,232,0.06);
+          border-radius: 8px;
           overflow: hidden;
         }
-        .svc-row {
+        .svc-card {
+          background: #0d0c10;
+          padding: clamp(2rem, 4vw, 3rem);
           display: grid;
-          gap: 1.25rem;
-          padding: clamp(1.5rem, 4vw, 2.5rem);
-          border-bottom: 1px solid #ddd8ce;
-          transition: background 200ms;
+          gap: 1.5rem;
+          transition: background 300ms;
           cursor: default;
+          position: relative;
+          overflow: hidden;
         }
-        .svc-row:last-child { border-bottom: none; }
-        .svc-row:hover { background: #f5f0e8; }
-        .svc-row-top {
+        .svc-card::after {
+          content: '';
+          position: absolute;
+          bottom: 0; left: 0;
+          height: 1px;
+          width: 0;
+          background: linear-gradient(90deg, transparent, #c9a96e, transparent);
+          transition: width 500ms cubic-bezier(0.16,1,0.3,1);
+        }
+        .svc-card:hover { background: #141218; }
+        .svc-card:hover::after { width: 100%; }
+        .svc-card-top {
           display: flex;
           align-items: flex-start;
           justify-content: space-between;
-          gap: 1rem;
-        }
-        .svc-row-left {
-          display: flex;
-          align-items: center;
-          gap: 1.25rem;
         }
         .svc-num {
-          font-family: 'DM Sans', system-ui, sans-serif;
-          font-size: 0.7rem;
+          font-size: 0.65rem;
           font-weight: 600;
-          letter-spacing: 0.1em;
-          color: #b8965a;
-          min-width: 20px;
+          letter-spacing: 0.12em;
+          color: #c9a96e;
         }
-        .svc-title {
-          font-family: 'Cormorant Garamond', Georgia, serif;
-          font-size: clamp(1.3rem, 1rem + 1.2vw, 2rem);
-          font-weight: 400;
-          color: #1a1610;
-          line-height: 1.1;
-        }
-        .svc-icon-wrap {
-          width: 40px;
-          height: 40px;
+        .svc-icon {
+          width: 42px; height: 42px;
+          border: 1px solid rgba(201,169,110,0.2);
+          border-radius: 4px;
           display: flex;
           align-items: center;
           justify-content: center;
-          border: 1px solid #ddd8ce;
-          border-radius: 50%;
-          flex-shrink: 0;
-          color: #b8965a;
+          color: #c9a96e;
+          transition: background 300ms, border-color 300ms;
+        }
+        .svc-card:hover .svc-icon {
+          background: rgba(201,169,110,0.1);
+          border-color: rgba(201,169,110,0.4);
+        }
+        .svc-title {
+          font-family: 'Cormorant Garamond', Georgia, serif;
+          font-size: clamp(1.4rem, 1.1rem + 1vw, 2rem);
+          font-weight: 400;
+          color: #f0ede8;
+          line-height: 1.1;
         }
         .svc-desc {
-          color: #4a4030;
-          font-family: 'DM Sans', system-ui, sans-serif;
-          font-size: clamp(0.9rem, 0.85rem + 0.25vw, 1rem);
-          max-width: 62ch;
-          line-height: 1.75;
-          padding-left: calc(20px + 1.25rem);
+          font-size: clamp(0.85rem, 0.8rem + 0.2vw, 0.95rem);
+          color: rgba(240,237,232,0.45);
+          line-height: 1.8;
+          max-width: 52ch;
         }
+        @media (min-width: 768px) { .svc-grid { grid-template-columns: 1fr 1fr; } }
       `}</style>
 
-      <section id="services" className="svc-section">
+      <section id="services" className="svc-section" ref={ref}>
         <div className="wrap">
           <div className="svc-header">
-            <span className="eyebrow">What We Do</span>
-            <h2 className="svc-h2">Services built<br /><em>for growth.</em></h2>
-            <span className="gold-rule" />
+            <span className="eyebrow reveal">What We Do</span>
+            <h2 className="svc-h2 reveal reveal-delay-1">Craft built<br /><em>for impact.</em></h2>
+            <span className="gold-line reveal reveal-delay-2" />
           </div>
-          <div className="svc-list">
-            {svcs.map(({ n, Icon, title, desc }) => (
-              <div key={title} className="svc-row">
-                <div className="svc-row-top">
-                  <div className="svc-row-left">
-                    <span className="svc-num">{n}</span>
-                    <h3 className="svc-title">{title}</h3>
-                  </div>
-                  <div className="svc-icon-wrap"><Icon size={17} /></div>
+          <div className="svc-grid">
+            {svcs.map(({ n, Icon, title, desc }, i) => (
+              <div key={title} className={`svc-card reveal reveal-delay-${i % 4 + 1}`}>
+                <div className="svc-card-top">
+                  <span className="svc-num">{n}</span>
+                  <div className="svc-icon"><Icon size={17} /></div>
                 </div>
+                <h3 className="svc-title">{title}</h3>
                 <p className="svc-desc">{desc}</p>
               </div>
             ))}
