@@ -2,17 +2,16 @@ import { useState, useEffect } from 'react'
 import { Menu, X } from 'lucide-react'
 
 const links = [
-  { href:'#services', label:'Services' },
-  { href:'#portfolio', label:'Portfolio' },
-  { href:'#process', label:'Process' },
-  { href:'#about', label:'About' },
-  { href:'#contact', label:'Contact' },
+  {href:'#services',label:'Services'},
+  {href:'#portfolio',label:'Portfolio'},
+  {href:'#process',label:'Process'},
+  {href:'#about',label:'About'},
+  {href:'#contact',label:'Contact'},
 ]
 
 export default function Navbar() {
   const [open, setOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
-
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 40)
     window.addEventListener('scroll', fn)
@@ -24,77 +23,87 @@ export default function Navbar() {
       <style>{`
         .nav{
           position:fixed;top:0;left:0;right:0;z-index:500;
-          transition:all 350ms cubic-bezier(0.16,1,0.3,1);
+          transition:all 300ms cubic-bezier(0.16,1,0.3,1);
         }
-        .nav.scrolled{
-          background:rgba(12,10,6,0.85);
-          backdrop-filter:blur(24px) saturate(1.5);
-          border-bottom:1px solid rgba(184,150,90,0.15);
+        .nav.up{
+          background:rgba(254,252,248,0.95);
+          backdrop-filter:blur(20px);
+          border-bottom:1px solid rgba(0,0,0,0.06);
+          box-shadow:0 2px 20px rgba(0,0,0,0.04);
         }
         .nav-inner{
           width:min(calc(100% - 3rem),1200px);
           margin-inline:auto;
           display:flex;align-items:center;justify-content:space-between;
-          min-height:80px;
+          min-height:76px;
         }
-        .nav-logo{display:flex;flex-direction:column;line-height:1;gap:2px}
+        .nav-logo{display:flex;align-items:center;gap:0.6rem;text-decoration:none}
+        .nav-logo-badge{
+          width:36px;height:36px;border-radius:10px;
+          background:linear-gradient(135deg,#ff6b35,#f59e0b);
+          display:flex;align-items:center;justify-content:center;
+          font-family:'Cormorant Garamond',Georgia,serif;
+          font-size:1rem;font-weight:700;color:#fff;
+          flex-shrink:0;
+        }
+        .nav-logo-text{display:flex;flex-direction:column;line-height:1.1}
         .nav-logo-name{
           font-family:'Cormorant Garamond',Georgia,serif;
-          font-size:clamp(1.1rem,1rem + 0.4vw,1.35rem);
-          font-weight:600;letter-spacing:-0.01em;
-          background:linear-gradient(135deg,#faf8f3,#d4aa6a);
-          -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+          font-size:1.1rem;font-weight:600;letter-spacing:-0.01em;color:#111;
         }
         .nav-logo-sub{
-          font-size:0.6rem;font-weight:600;letter-spacing:0.18em;
-          text-transform:uppercase;color:#b8965a;
+          font-size:0.58rem;font-weight:600;letter-spacing:0.16em;
+          text-transform:uppercase;color:#ff6b35;
           font-family:'DM Sans',system-ui,sans-serif;
         }
-        .nav-links{display:none;align-items:center;gap:2.5rem;list-style:none}
+        .nav-links{display:none;align-items:center;gap:2.25rem;list-style:none}
         .nav-links a{
           font-family:'DM Sans',system-ui,sans-serif;
-          font-size:0.82rem;font-weight:500;letter-spacing:0.04em;
-          color:rgba(232,224,208,0.7);transition:color 200ms;position:relative;
+          font-size:0.84rem;font-weight:500;color:rgba(17,17,17,0.6);
+          transition:color 180ms;position:relative;
         }
-        .nav-links a::after{
-          content:'';position:absolute;bottom:-4px;left:0;width:0;height:1px;
-          background:#b8965a;transition:width 300ms cubic-bezier(0.16,1,0.3,1);
-        }
-        .nav-links a:hover{color:#d4aa6a}
-        .nav-links a:hover::after{width:100%}
+        .nav-links a:hover{color:#ff6b35}
         .nav-cta{
           display:none;align-items:center;justify-content:center;
-          min-height:40px;padding:0 1.5rem;border-radius:9999px;
+          min-height:40px;padding:0 1.4rem;border-radius:9999px;
           font-family:'DM Sans',system-ui,sans-serif;
-          font-size:0.72rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;
-          background:linear-gradient(135deg,#b8965a,#d4aa6a);
-          color:#0c0a06;text-decoration:none;
-          transition:all 250ms;box-shadow:0 2px 16px rgba(184,150,90,0.25);
+          font-size:0.76rem;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;
+          background:#111;color:#fff;text-decoration:none;
+          transition:all 220ms;
         }
-        .nav-cta:hover{transform:translateY(-1px);box-shadow:0 6px 28px rgba(184,150,90,0.4)}
+        .nav-cta:hover{background:#ff6b35;transform:translateY(-1px);box-shadow:0 6px 24px rgba(255,107,53,0.3)}
         .nav-ham{
-          width:44px;height:44px;
+          width:42px;height:42px;
           display:none;align-items:center;justify-content:center;
-          border-radius:10px;border:1px solid rgba(184,150,90,0.25);
-          background:rgba(184,150,90,0.07);color:#e8e0d0;
+          border-radius:10px;border:1.5px solid rgba(0,0,0,0.1);
+          background:#fff;color:#111;
+          box-shadow:0 2px 8px rgba(0,0,0,0.06);
         }
         .mob-menu{
-          position:fixed;inset:0;top:80px;z-index:499;
-          background:rgba(12,10,6,0.97);
-          backdrop-filter:blur(40px);
+          position:fixed;inset:0;top:76px;
+          background:rgba(254,252,248,0.98);
+          backdrop-filter:blur(30px);
           padding:2rem 1.5rem 3rem;
-          display:flex;flex-direction:column;gap:0;
-          border-top:1px solid rgba(184,150,90,0.12);
+          display:flex;flex-direction:column;
+          border-top:1px solid rgba(0,0,0,0.06);
+          z-index:499;
         }
-        .mob-link{
-          display:block;padding:1.1rem 0;
+        .mob-lnk{
+          display:block;padding:1rem 0;
           font-family:'Cormorant Garamond',Georgia,serif;
-          font-size:2rem;font-weight:300;
-          color:rgba(232,224,208,0.8);
-          border-bottom:1px solid rgba(184,150,90,0.1);
-          transition:color 200ms,padding-left 200ms;
+          font-size:2.2rem;font-weight:300;color:#111;
+          border-bottom:1px solid rgba(0,0,0,0.06);
+          transition:color 180ms,padding-left 180ms;
+          text-decoration:none;
         }
-        .mob-link:hover{color:#d4aa6a;padding-left:8px}
+        .mob-lnk:hover{color:#ff6b35;padding-left:8px}
+        .mob-cta{
+          display:flex;align-items:center;justify-content:center;
+          margin-top:2rem;min-height:52px;border-radius:9999px;
+          font-family:'DM Sans',system-ui,sans-serif;
+          font-size:0.82rem;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;
+          background:#111;color:#fff;text-decoration:none;
+        }
         @media(min-width:900px){
           .nav-links{display:flex!important}
           .nav-cta{display:inline-flex!important}
@@ -105,12 +114,14 @@ export default function Navbar() {
           .nav-ham{display:inline-flex!important}
         }
       `}</style>
-
-      <header className={`nav${scrolled?' scrolled':''}`}>
+      <header className={`nav${scrolled?' up':''}`}>
         <div className="nav-inner">
           <a href="#top" className="nav-logo">
-            <span className="nav-logo-name">Hyvaroo Labs</span>
-            <span className="nav-logo-sub">Software House</span>
+            <div className="nav-logo-badge">H</div>
+            <div className="nav-logo-text">
+              <span className="nav-logo-name">Hyvaroo Labs</span>
+              <span className="nav-logo-sub">Software House</span>
+            </div>
           </a>
           <nav><ul className="nav-links">{links.map(l=><li key={l.href}><a href={l.href}>{l.label}</a></li>)}</ul></nav>
           <div style={{display:'flex',alignItems:'center',gap:'0.75rem'}}>
@@ -123,9 +134,9 @@ export default function Navbar() {
         {open&&(
           <div className="mob-menu">
             {links.map(l=>(
-              <a key={l.href} href={l.href} className="mob-link" onClick={()=>setOpen(false)}>{l.label}</a>
+              <a key={l.href} href={l.href} className="mob-lnk" onClick={()=>setOpen(false)}>{l.label}</a>
             ))}
-            <a href="https://wa.me/6285159611202" target="_blank" rel="noopener noreferrer" className="btn-gold" style={{marginTop:'2rem',justifyContent:'center'}}>Let&#39;s Talk</a>
+            <a href="https://wa.me/6285159611202" target="_blank" rel="noopener noreferrer" className="mob-cta">Let&#39;s Talk</a>
           </div>
         )}
       </header>

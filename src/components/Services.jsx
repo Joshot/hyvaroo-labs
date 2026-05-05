@@ -1,121 +1,89 @@
 import { Code2, Layers, Pen, Zap, Globe, ShieldCheck } from 'lucide-react'
 
 const svcs = [
-  { n:'01', Icon:Code2, title:'Web Development', tag:'Full-Stack', desc:'End-to-end digital products engineered for speed, reliability, and long-term scalability. From architecture to deployment.' },
-  { n:'02', Icon:Layers, title:'Frontend Engineering', tag:'React & Next.js', desc:'Polished component systems and interfaces built with clean code, modern tooling, and precision interaction design.' },
-  { n:'03', Icon:Pen, title:'UI / UX Design', tag:'Product Design', desc:'Strategy-led design that converts. Minimal, intentional, and tuned to the expectations of a global audience.' },
-  { n:'04', Icon:Zap, title:'Performance & Scale', tag:'Optimization', desc:'Architecture audits, CDN strategy, and front-end performance that meets enterprise-grade standards under real load.' },
-  { n:'05', Icon:Globe, title:'Digital Strategy', tag:'Consulting', desc:'Business-aligned technology roadmaps. We help you decide what to build, when to build it, and how to measure success.' },
-  { n:'06', Icon:ShieldCheck, title:'Maintenance & Support', tag:'Long-term', desc:'Ongoing technical partnership after launch. Bug fixes, updates, monitoring, and performance improvements.' },
+  {Icon:Code2,  title:'Web Development',    tag:'Full-Stack',  desc:'End-to-end products engineered for speed, reliability, and long-term scale. From architecture to launch.',            bg:'#fff0eb',ic:'#ff6b35',border:'#ffd5c4'},
+  {Icon:Layers, title:'Frontend Engineering',tag:'React/Next',  desc:'Component systems and polished interfaces built with clean code, modern tooling, and precision interaction.',         bg:'#eef2ff',ic:'#4338ca',border:'#c7d2fe'},
+  {Icon:Pen,    title:'UI / UX Design',      tag:'Product',     desc:'Strategy-led design that converts. Minimal, intentional, tuned to the expectations of a global audience.',           bg:'#ecfdf5',ic:'#10b981',border:'#a7f3d0'},
+  {Icon:Zap,    title:'Performance & Scale', tag:'Optimization',desc:'Architecture audits, CDN strategy, and front-end performance that meets enterprise-grade standards.',                 bg:'#fffbeb',ic:'#f59e0b',border:'#fde68a'},
+  {Icon:Globe,  title:'Digital Strategy',    tag:'Consulting',  desc:'Business-aligned technology roadmaps. We help you decide what to build, when to build it, and how to grow.',       bg:'#f0f9ff',ic:'#0ea5e9',border:'#bae6fd'},
+  {Icon:ShieldCheck,title:'Maintenance & Support',tag:'Long-term',desc:'Ongoing technical partnership after launch. Bug fixes, updates, monitoring, and continuous improvements.',      bg:'#fff1f2',ic:'#f43f5e',border:'#fecdd3'},
 ]
 
 export default function Services() {
   return (
     <>
       <style>{`
-        .svc-section{
-          padding:clamp(5rem,10vw,9rem) 0;
-          background:#0c0a06;
-          border-top:1px solid rgba(184,150,90,0.1);
-        }
+        .svc-section{padding:clamp(5rem,10vw,9rem) 0;background:#fefcf8}
         .svc-top{
-          display:flex;justify-content:space-between;
-          align-items:flex-end;flex-wrap:wrap;
-          gap:2rem;margin-bottom:5rem;
+          display:grid;gap:3rem;
+          margin-bottom:4.5rem;
         }
+        @media(min-width:900px){.svc-top{grid-template-columns:1fr 1fr;align-items:end}}
         .svc-h2{
           font-family:'Cormorant Garamond',Georgia,serif;
-          font-size:clamp(2.2rem,1.2rem + 3.5vw,5rem);
-          font-weight:300;line-height:0.95;
-          color:#faf8f3;max-width:12ch;
+          font-size:clamp(2.2rem,1.2rem + 3vw,4.8rem);
+          font-weight:300;line-height:0.94;color:#111;
         }
-        .svc-h2 em{font-style:italic}
+        .svc-h2 em{font-style:italic;color:#ff6b35}
         .svc-sub{
           font-family:'DM Sans',system-ui,sans-serif;
-          font-size:clamp(0.9rem,0.85rem + 0.25vw,1.05rem);
-          color:rgba(232,224,208,0.5);
-          max-width:36ch;line-height:1.75;
+          font-size:1rem;color:rgba(17,17,17,0.5);
+          max-width:38ch;line-height:1.78;
         }
         .svc-grid{
-          display:grid;gap:1px;
-          background:rgba(184,150,90,0.08);
-          border:1px solid rgba(184,150,90,0.1);
-          border-radius:24px;overflow:hidden;
+          display:grid;gap:1.25rem;
         }
-        @media(min-width:768px){.svc-grid{grid-template-columns:repeat(2,1fr)}}
-        @media(min-width:1100px){.svc-grid{grid-template-columns:repeat(3,1fr)}}
+        @media(min-width:680px){.svc-grid{grid-template-columns:repeat(2,1fr)}}
+        @media(min-width:1080px){.svc-grid{grid-template-columns:repeat(3,1fr)}}
         .svc-card{
-          padding:clamp(1.75rem,3.5vw,2.5rem);
-          background:#0f0d08;
+          padding:2rem;
+          border-radius:20px;
+          border:1.5px solid;
+          background:#fff;
           display:flex;flex-direction:column;gap:1.25rem;
-          transition:background 300ms;
-          cursor:default;position:relative;overflow:hidden;
+          transition:all 280ms cubic-bezier(0.16,1,0.3,1);
+          cursor:default;
         }
-        .svc-card::after{
-          content:'';
-          position:absolute;inset:0;
-          background:radial-gradient(ellipse at 0% 0%,rgba(184,150,90,0.06) 0%,transparent 60%);
-          opacity:0;transition:opacity 400ms;
-        }
-        .svc-card:hover{background:#141008}
-        .svc-card:hover::after{opacity:1}
+        .svc-card:hover{transform:translateY(-6px);box-shadow:0 20px 60px rgba(0,0,0,0.08)}
         .svc-card-top{display:flex;justify-content:space-between;align-items:flex-start}
-        .svc-icon{
-          width:44px;height:44px;
+        .svc-icon-wrap{
+          width:46px;height:46px;
+          border-radius:14px;
           display:flex;align-items:center;justify-content:center;
-          border:1px solid rgba(184,150,90,0.2);
-          border-radius:12px;
-          background:rgba(184,150,90,0.06);
-          color:#b8965a;
           flex-shrink:0;
         }
-        .svc-num{
-          font-family:'DM Sans',system-ui,sans-serif;
-          font-size:0.65rem;font-weight:600;
-          letter-spacing:0.1em;color:rgba(184,150,90,0.4);
-        }
         .svc-tag{
-          display:inline-block;
-          padding:0.2rem 0.7rem;
-          border-radius:9999px;
-          border:1px solid rgba(184,150,90,0.2);
+          padding:0.2rem 0.65rem;border-radius:9999px;
           font-family:'DM Sans',system-ui,sans-serif;
-          font-size:0.62rem;font-weight:600;letter-spacing:0.1em;
-          text-transform:uppercase;color:rgba(184,150,90,0.7);
+          font-size:0.62rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;
         }
         .svc-title{
           font-family:'Cormorant Garamond',Georgia,serif;
-          font-size:clamp(1.25rem,1rem + 0.8vw,1.6rem);
-          font-weight:400;color:#faf8f3;line-height:1.1;
+          font-size:clamp(1.2rem,1rem + 0.7vw,1.55rem);
+          font-weight:500;color:#111;line-height:1.1;
         }
         .svc-desc{
           font-family:'DM Sans',system-ui,sans-serif;
-          font-size:0.88rem;color:rgba(232,224,208,0.5);
-          line-height:1.78;
+          font-size:0.88rem;color:rgba(17,17,17,0.5);line-height:1.78;
         }
       `}</style>
-
       <section id="services" className="svc-section">
         <div className="wrap">
           <div className="svc-top">
-            <div style={{display:'flex',flexDirection:'column',gap:'1rem'}}>
-              <span className="eyebrow">What We Build</span>
-              <h2 className="svc-h2">Services that<br/><em>move markets.</em></h2>
-              <span className="gold-line"/>
+            <div>
+              <p style={{fontFamily:'DM Sans,system-ui,sans-serif',fontSize:'0.7rem',fontWeight:600,letterSpacing:'0.18em',textTransform:'uppercase',color:'#ff6b35',marginBottom:'1rem'}}>What We Build</p>
+              <h2 className="svc-h2">Services built<br/>for <em>growth.</em></h2>
             </div>
-            <p className="svc-sub">From concept to launch and beyond — every service we offer is built around one principle: your product deserves to be exceptional.</p>
+            <p className="svc-sub" style={{paddingBottom:'0.5rem'}}>From concept to launch and beyond. Every service we offer is built around one principle: your product deserves to be exceptional.</p>
           </div>
           <div className="svc-grid">
-            {svcs.map(({n,Icon,title,tag,desc})=>(
-              <div key={title} className="svc-card">
+            {svcs.map(({Icon,title,tag,desc,bg,ic,border})=>(
+              <div key={title} className="svc-card" style={{borderColor:border}}>
                 <div className="svc-card-top">
-                  <div className="svc-icon"><Icon size={18}/></div>
-                  <span className="svc-num">{n}</span>
+                  <div className="svc-icon-wrap" style={{background:bg}}><Icon size={20} color={ic}/></div>
+                  <span className="svc-tag" style={{background:bg,color:ic}}>{tag}</span>
                 </div>
-                <div>
-                  <span className="svc-tag">{tag}</span>
-                  <h3 className="svc-title" style={{marginTop:'0.6rem'}}>{title}</h3>
-                </div>
+                <h3 className="svc-title">{title}</h3>
                 <p className="svc-desc">{desc}</p>
               </div>
             ))}

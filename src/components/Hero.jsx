@@ -1,212 +1,258 @@
-import { useEffect, useRef } from 'react'
 import { ArrowUpRight, ChevronDown } from 'lucide-react'
 
 export default function Hero() {
-  const canvasRef = useRef(null)
-
-  useEffect(() => {
-    const canvas = canvasRef.current
-    if (!canvas) return
-    const ctx = canvas.getContext('2d')
-    let w = canvas.width = window.innerWidth
-    let h = canvas.height = window.innerHeight
-    let raf
-
-    const resize = () => {
-      w = canvas.width = window.innerWidth
-      h = canvas.height = window.innerHeight
-    }
-    window.addEventListener('resize', resize)
-
-    const count = Math.min(80, Math.floor(w * h / 14000))
-    const particles = Array.from({ length: count }, () => ({
-      x: Math.random() * w,
-      y: Math.random() * h,
-      r: Math.random() * 1.2 + 0.3,
-      vx: (Math.random() - 0.5) * 0.25,
-      vy: (Math.random() - 0.5) * 0.25,
-      o: Math.random() * 0.5 + 0.1,
-    }))
-
-    const draw = () => {
-      ctx.clearRect(0, 0, w, h)
-      particles.forEach(p => {
-        p.x += p.vx; p.y += p.vy
-        if (p.x < 0) p.x = w
-        if (p.x > w) p.x = 0
-        if (p.y < 0) p.y = h
-        if (p.y > h) p.y = 0
-        ctx.beginPath()
-        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2)
-        ctx.fillStyle = `rgba(184,150,90,${p.o})`
-        ctx.fill()
-      })
-      particles.forEach((a, i) => {
-        particles.slice(i + 1).forEach(b => {
-          const d = Math.hypot(a.x - b.x, a.y - b.y)
-          if (d < 120) {
-            ctx.beginPath()
-            ctx.moveTo(a.x, a.y)
-            ctx.lineTo(b.x, b.y)
-            ctx.strokeStyle = `rgba(184,150,90,${0.08 * (1 - d / 120)})`
-            ctx.lineWidth = 0.5
-            ctx.stroke()
-          }
-        })
-      })
-      raf = requestAnimationFrame(draw)
-    }
-    draw()
-    return () => { cancelAnimationFrame(raf); window.removeEventListener('resize', resize) }
-  }, [])
-
   return (
     <>
       <style>{`
         .hero{
-          position:relative;min-height:100dvh;
-          display:flex;flex-direction:column;justify-content:center;
-          background:radial-gradient(ellipse 80% 60% at 50% 0%,#1a1208 0%,#0c0a06 60%);
+          min-height:100dvh;
+          background:#fefcf8;
+          position:relative;
           overflow:hidden;
+          display:flex;flex-direction:column;justify-content:center;
         }
-        .hero-canvas{position:absolute;inset:0;pointer-events:none}
-        .hero-glow-l{
-          position:absolute;top:-20%;left:-10%;width:60%;height:80%;
-          background:radial-gradient(ellipse,rgba(184,150,90,0.07) 0%,transparent 65%);
+        /* Big bold blobs */
+        .blob1{
+          position:absolute;
+          width:clamp(320px,45vw,640px);
+          height:clamp(320px,45vw,640px);
+          border-radius:60% 40% 30% 70%/60% 30% 70% 40%;
+          background:linear-gradient(135deg,rgba(255,107,53,0.18),rgba(245,158,11,0.14));
+          top:-10%;right:-8%;
+          animation:blob 12s ease-in-out infinite;
           pointer-events:none;
         }
-        .hero-glow-r{
-          position:absolute;bottom:-10%;right:-10%;width:50%;height:60%;
-          background:radial-gradient(ellipse,rgba(184,150,90,0.05) 0%,transparent 65%);
+        .blob2{
+          position:absolute;
+          width:clamp(240px,35vw,480px);
+          height:clamp(240px,35vw,480px);
+          border-radius:40% 60% 70% 30%/40% 50% 60% 50%;
+          background:linear-gradient(135deg,rgba(67,56,202,0.1),rgba(14,165,233,0.1));
+          bottom:-8%;left:-5%;
+          animation:blob 16s ease-in-out infinite reverse;
           pointer-events:none;
         }
-        .hero-label{
-          position:absolute;right:2rem;top:50%;
-          transform:translateY(-50%) rotate(90deg);
-          transform-origin:center;
-          font-size:0.62rem;letter-spacing:0.22em;text-transform:uppercase;
-          color:rgba(184,150,90,0.4);
-          font-family:'DM Sans',system-ui,sans-serif;
-          display:none;
+        .blob3{
+          position:absolute;
+          width:clamp(160px,22vw,320px);
+          height:clamp(160px,22vw,320px);
+          border-radius:50%;
+          background:radial-gradient(circle,rgba(16,185,129,0.12),transparent 70%);
+          top:40%;left:45%;
+          pointer-events:none;
+        }
+        /* Dot grid overlay */
+        .hero-dots{
+          position:absolute;inset:0;
+          background-image:radial-gradient(circle,rgba(0,0,0,0.07) 1px,transparent 1px);
+          background-size:28px 28px;
+          pointer-events:none;
+          mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black 30%,transparent 100%);
         }
         .hero-inner{
           position:relative;z-index:1;
           width:min(calc(100% - 3rem),1200px);
           margin-inline:auto;
-          padding-top:clamp(6rem,12vw,10rem);
-          padding-bottom:clamp(6rem,12vw,10rem);
+          padding-top:clamp(7rem,14vw,11rem);
+          padding-bottom:clamp(5rem,10vw,8rem);
+          display:grid;
+          gap:3rem;
         }
-        .hero-badge{
+        @media(min-width:960px){
+          .hero-inner{grid-template-columns:1.05fr 0.95fr;align-items:center}
+        }
+        .hero-left{display:flex;flex-direction:column;gap:1.5rem}
+        .hero-tag{
           display:inline-flex;align-items:center;gap:0.6rem;
-          padding:0.4rem 1rem 0.4rem 0.5rem;
+          padding:0.35rem 0.9rem 0.35rem 0.5rem;
           border-radius:9999px;
-          border:1px solid rgba(184,150,90,0.25);
-          background:rgba(184,150,90,0.07);
-          margin-bottom:2.5rem;
+          background:rgba(255,107,53,0.09);
+          border:1px solid rgba(255,107,53,0.2);
+          width:fit-content;
         }
-        .hero-badge-dot{
-          width:6px;height:6px;border-radius:50%;
-          background:#b8965a;
-          animation:pulse-gold 2s ease-in-out infinite;
+        .hero-tag-dot{
+          width:7px;height:7px;border-radius:50%;
+          background:linear-gradient(135deg,#ff6b35,#f59e0b);
+          flex-shrink:0;
         }
-        .hero-badge-text{
+        .hero-tag-text{
           font-family:'DM Sans',system-ui,sans-serif;
           font-size:0.7rem;font-weight:600;letter-spacing:0.14em;
-          text-transform:uppercase;color:#b8965a;
+          text-transform:uppercase;color:#ff6b35;
         }
         .hero-h1{
           font-family:'Cormorant Garamond',Georgia,serif;
-          font-size:clamp(3.5rem,2rem + 6vw,8.5rem);
+          font-size:clamp(3.2rem,1.5rem + 5.5vw,7.5rem);
           font-weight:300;line-height:0.92;
-          letter-spacing:-0.04em;color:#faf8f3;
-          margin-bottom:1.75rem;
+          letter-spacing:-0.035em;color:#111;
         }
         .hero-h1 em{font-style:italic}
-        .hero-h1 .shimmer-text{
-          background:linear-gradient(120deg,#b8965a 0%,#f0d080 40%,#b8965a 60%,#d4aa6a 100%);
-          background-size:200% auto;
-          -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-          animation:shimmer 3s linear infinite;
-        }
-        .hero-sub{
+        .hero-h1 .c-coral{color:#ff6b35}
+        .hero-h1 .c-indigo{color:#4338ca}
+        .hero-desc{
           font-family:'DM Sans',system-ui,sans-serif;
-          font-size:clamp(1rem,0.9rem + 0.5vw,1.25rem);
-          color:rgba(232,224,208,0.6);
-          max-width:50ch;font-weight:300;line-height:1.85;
-          margin-bottom:2.5rem;
+          font-size:clamp(0.95rem,0.88rem + 0.35vw,1.15rem);
+          color:rgba(17,17,17,0.55);
+          max-width:46ch;font-weight:300;line-height:1.85;
         }
-        .hero-btns{display:flex;flex-wrap:wrap;gap:0.75rem;margin-bottom:4rem}
-        .hero-proof{
-          display:flex;flex-wrap:wrap;gap:2.5rem;
-          padding-top:2.5rem;
-          border-top:1px solid rgba(184,150,90,0.15);
-        }
-        .proof-item-val{
-          font-family:'Cormorant Garamond',Georgia,serif;
-          font-size:clamp(1.8rem,1.2rem + 1.5vw,3rem);
-          font-weight:600;line-height:1;
-          background:linear-gradient(135deg,#faf8f3,#d4aa6a);
-          -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-        }
-        .proof-item-label{
-          font-size:0.68rem;font-weight:600;letter-spacing:0.12em;
-          text-transform:uppercase;color:rgba(184,150,90,0.7);
-          margin-top:4px;
+        .hero-btns{display:flex;flex-wrap:wrap;gap:0.75rem}
+        .btn-fill{
+          display:inline-flex;align-items:center;gap:0.5rem;
+          min-height:52px;padding:0 2rem;border-radius:9999px;
           font-family:'DM Sans',system-ui,sans-serif;
+          font-size:0.8rem;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;
+          background:#111;color:#fff;text-decoration:none;
+          transition:all 250ms cubic-bezier(0.16,1,0.3,1);
+          border:2px solid #111;
         }
+        .btn-fill:hover{background:#ff6b35;border-color:#ff6b35;transform:translateY(-2px);box-shadow:0 10px 36px rgba(255,107,53,0.3)}
+        .btn-stroke{
+          display:inline-flex;align-items:center;gap:0.5rem;
+          min-height:52px;padding:0 2rem;border-radius:9999px;
+          font-family:'DM Sans',system-ui,sans-serif;
+          font-size:0.8rem;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;
+          background:transparent;color:#111;text-decoration:none;
+          border:2px solid rgba(17,17,17,0.15);
+          transition:all 250ms;
+        }
+        .btn-stroke:hover{border-color:#4338ca;color:#4338ca;transform:translateY(-2px)}
+        .hero-badges{
+          display:flex;flex-wrap:wrap;gap:0.6rem;margin-top:0.5rem;
+        }
+        .h-badge{
+          padding:0.4rem 0.9rem;border-radius:9999px;
+          font-family:'DM Sans',system-ui,sans-serif;
+          font-size:0.7rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;
+        }
+        /* Hero right — visual card stack */
+        .hero-right{position:relative;display:flex;justify-content:center;align-items:center}
+        .hero-card-main{
+          width:100%;max-width:420px;
+          background:#fff;
+          border-radius:28px;
+          border:1px solid rgba(0,0,0,0.07);
+          box-shadow:0 24px 80px rgba(0,0,0,0.1),0 4px 16px rgba(0,0,0,0.05);
+          padding:2.5rem;
+          position:relative;z-index:2;
+        }
+        .card-inner-label{
+          font-family:'DM Sans',system-ui,sans-serif;
+          font-size:0.65rem;font-weight:600;letter-spacing:0.14em;
+          text-transform:uppercase;color:rgba(17,17,17,0.35);
+          margin-bottom:1.5rem;
+        }
+        .card-service-row{
+          display:flex;align-items:center;gap:0.85rem;
+          padding:0.85rem 0;
+          border-bottom:1px solid rgba(0,0,0,0.05);
+        }
+        .card-service-row:last-child{border-bottom:none}
+        .card-svc-dot{
+          width:10px;height:10px;border-radius:50%;flex-shrink:0;
+        }
+        .card-svc-name{
+          font-family:'DM Sans',system-ui,sans-serif;
+          font-size:0.88rem;font-weight:500;color:#111;flex:1;
+        }
+        .card-svc-tag{
+          font-family:'DM Sans',system-ui,sans-serif;
+          font-size:0.65rem;font-weight:600;letter-spacing:0.08em;
+          text-transform:uppercase;
+          padding:0.2rem 0.6rem;border-radius:9999px;
+        }
+        .float-badge{
+          position:absolute;
+          background:#fff;
+          border-radius:16px;
+          box-shadow:0 8px 32px rgba(0,0,0,0.1);
+          padding:0.75rem 1rem;
+          display:flex;align-items:center;gap:0.6rem;
+          animation:float 3s ease-in-out infinite;
+        }
+        .fb-top{top:-1rem;right:-1.5rem;animation-delay:0s;z-index:3}
+        .fb-bot{bottom:-1rem;left:-1.5rem;animation-delay:1.5s;z-index:3}
+        .fb-icon{width:32px;height:32px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0}
+        .fb-val{font-family:'Cormorant Garamond',Georgia,serif;font-size:1.1rem;font-weight:600;color:#111;line-height:1}
+        .fb-lbl{font-family:'DM Sans',system-ui,sans-serif;font-size:0.65rem;color:rgba(17,17,17,0.45);font-weight:500}
         .hero-scroll{
           position:absolute;bottom:2.5rem;left:50%;transform:translateX(-50%);
           display:flex;flex-direction:column;align-items:center;gap:0.4rem;
-          color:rgba(184,150,90,0.4);animation:float 2.5s ease-in-out infinite;
+          color:rgba(17,17,17,0.3);animation:float 2.5s ease-in-out infinite;
           font-family:'DM Sans',system-ui,sans-serif;
           font-size:0.62rem;letter-spacing:0.16em;text-transform:uppercase;
         }
-        @media(min-width:900px){.hero-label{display:block}}
       `}</style>
 
       <section id="top" className="hero">
-        <canvas ref={canvasRef} className="hero-canvas" />
-        <div className="hero-glow-l" aria-hidden="true" />
-        <div className="hero-glow-r" aria-hidden="true" />
-        <span className="hero-label" aria-hidden="true">Hyvaroo Labs &mdash; 2026</span>
+        <div className="blob1" aria-hidden="true"/>
+        <div className="blob2" aria-hidden="true"/>
+        <div className="blob3" aria-hidden="true"/>
+        <div className="hero-dots" aria-hidden="true"/>
 
         <div className="hero-inner">
-          <div className="hero-badge animate-fadeup">
-            <span className="hero-badge-dot" />
-            <span className="hero-badge-text">Premium Software House &mdash; Jakarta</span>
+          {/* LEFT */}
+          <div className="hero-left">
+            <div className="hero-tag au">
+              <span className="hero-tag-dot"/>
+              <span className="hero-tag-text">Premium Software House &mdash; Jakarta</span>
+            </div>
+
+            <h1 className="hero-h1">
+              <span className="au d1">We build</span><br/>
+              <em className="au d2 c-coral">world-class</em><br/>
+              <span className="au d3 c-indigo">digital products.</span>
+            </h1>
+
+            <p className="hero-desc au d3">
+              Hyvaroo Labs crafts high-performance, beautifully designed web products
+              for founders and enterprises that refuse to settle for ordinary.
+            </p>
+
+            <div className="hero-btns au d4">
+              <a href="https://wa.me/6285159611202" target="_blank" rel="noopener noreferrer" className="btn-fill">
+                Start a Project <ArrowUpRight size={15}/>
+              </a>
+              <a href="#portfolio" className="btn-stroke">View Work</a>
+            </div>
+
+            <div className="hero-badges au d5">
+              {[['#fff0eb','#ff6b35','Web Dev'],['#eef2ff','#4338ca','UI/UX'],['#ecfdf5','#10b981','Next.js'],['#fffbeb','#f59e0b','Laravel']].map(([bg,c,t])=>(
+                <span key={t} className="h-badge" style={{background:bg,color:c}}>{t}</span>
+              ))}
+            </div>
           </div>
 
-          <h1 className="hero-h1">
-            <span className="animate-fadeup delay-1">We engineer</span><br/>
-            <em className="animate-fadeup delay-2">digital products</em><br/>
-            <span className="shimmer-text animate-fadeup delay-3">that define markets.</span>
-          </h1>
-
-          <p className="hero-sub animate-fadeup delay-3">
-            Hyvaroo Labs builds high-performance, beautifully crafted web products for
-            founders and enterprises that refuse to settle for mediocrity.
-          </p>
-
-          <div className="hero-btns animate-fadeup delay-4">
-            <a href="https://wa.me/6285159611202" target="_blank" rel="noopener noreferrer" className="btn-gold">
-              Start a Project <ArrowUpRight size={16}/>
-            </a>
-            <a href="#portfolio" className="btn-ghost">View Our Work</a>
-          </div>
-
-          <div className="hero-proof animate-fadeup delay-4">
-            {[['50+','Projects Delivered'],['100%','Client Satisfaction'],['3+','Years Experience'],['24h','Response Time']].map(([v,l])=>(
-              <div key={l}>
-                <div className="proof-item-val">{v}</div>
-                <div className="proof-item-label">{l}</div>
-              </div>
-            ))}
+          {/* RIGHT — Visual card */}
+          <div className="hero-right au d4">
+            <div className="float-badge fb-top">
+              <div className="fb-icon" style={{background:'#fff0eb'}}>&#128640;</div>
+              <div><div className="fb-val">50+</div><div className="fb-lbl">Projects Done</div></div>
+            </div>
+            <div className="float-badge fb-bot">
+              <div className="fb-icon" style={{background:'#ecfdf5'}}>&#9989;</div>
+              <div><div className="fb-val">100%</div><div className="fb-lbl">Satisfaction</div></div>
+            </div>
+            <div className="hero-card-main">
+              <p className="card-inner-label">Our Expertise</p>
+              {[
+                {dot:'#ff6b35',name:'Web Development',tag:'Full-Stack',tagBg:'#fff0eb',tagC:'#ff6b35'},
+                {dot:'#4338ca',name:'UI / UX Design',tag:'Design',tagBg:'#eef2ff',tagC:'#4338ca'},
+                {dot:'#10b981',name:'Frontend Eng.',tag:'React',tagBg:'#ecfdf5',tagC:'#10b981'},
+                {dot:'#f59e0b',name:'Performance',tag:'Scale',tagBg:'#fffbeb',tagC:'#f59e0b'},
+                {dot:'#0ea5e9',name:'Digital Strategy',tag:'Growth',tagBg:'#f0f9ff',tagC:'#0ea5e9'},
+              ].map(({dot,name,tag,tagBg,tagC})=>(
+                <div key={name} className="card-service-row">
+                  <span className="card-svc-dot" style={{background:dot}}/>
+                  <span className="card-svc-name">{name}</span>
+                  <span className="card-svc-tag" style={{background:tagBg,color:tagC}}>{tag}</span>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
 
         <div className="hero-scroll" aria-hidden="true">
-          Scroll
-          <ChevronDown size={14}/>
+          Scroll <ChevronDown size={13}/>
         </div>
       </section>
     </>

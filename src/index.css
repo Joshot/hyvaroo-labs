@@ -2,66 +2,33 @@
 
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased;scroll-padding-top:80px}
-body{min-height:100dvh;font-family:'DM Sans',system-ui,sans-serif;color:#1a1610;background:#0c0a06;line-height:1.7;overflow-x:hidden}
+body{min-height:100dvh;font-family:'DM Sans',system-ui,sans-serif;color:#111;background:#fefcf8;line-height:1.7;overflow-x:hidden}
 img,svg,video{display:block;max-width:100%;height:auto}
 ul{list-style:none}
 a{text-decoration:none;color:inherit}
 button{cursor:pointer;background:none;border:none;font:inherit;color:inherit}
-::selection{background:rgba(184,150,90,0.3)}
-:focus-visible{outline:1.5px solid #b8965a;outline-offset:3px;border-radius:4px}
+::selection{background:rgba(255,107,53,0.18)}
+:focus-visible{outline:2px solid #ff6b35;outline-offset:3px;border-radius:4px}
 
 .wrap{width:min(calc(100% - 3rem),1200px);margin-inline:auto}
 
-.eyebrow{font-family:'DM Sans',system-ui,sans-serif;font-size:0.68rem;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:#b8965a}
+/* --- color tokens --- */
+/* coral   #ff6b35 */
+/* indigo  #4338ca */
+/* mint    #10b981 */
+/* amber   #f59e0b */
+/* rose    #f43f5e */
+/* sky     #0ea5e9 */
 
-.gold-line{display:block;width:48px;height:1px;background:linear-gradient(90deg,transparent,#b8965a,transparent)}
-
-.btn-gold{
-  display:inline-flex;align-items:center;gap:0.5rem;
-  min-height:52px;padding:0 2.25rem;
-  border-radius:9999px;
-  font-family:'DM Sans',system-ui,sans-serif;
-  font-size:0.78rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;
-  background:linear-gradient(135deg,#b8965a,#d4aa6a,#8a6a38);
-  background-size:200% 200%;
-  color:#0c0a06;
-  border:none;
-  transition:all 300ms cubic-bezier(0.16,1,0.3,1);
-  box-shadow:0 4px 24px rgba(184,150,90,0.3);
-  position:relative;overflow:hidden;
-}
-.btn-gold::after{
-  content:'';
-  position:absolute;inset:0;
-  background:linear-gradient(135deg,rgba(255,255,255,0.15),transparent);
-  opacity:0;transition:opacity 200ms;
-}
-.btn-gold:hover{transform:translateY(-2px);box-shadow:0 8px 40px rgba(184,150,90,0.45);background-position:100% 0}
-.btn-gold:hover::after{opacity:1}
-
-.btn-ghost{
-  display:inline-flex;align-items:center;gap:0.5rem;
-  min-height:52px;padding:0 2.25rem;
-  border-radius:9999px;
-  font-family:'DM Sans',system-ui,sans-serif;
-  font-size:0.78rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;
-  background:transparent;color:#e8e0d0;
-  border:1px solid rgba(184,150,90,0.35);
-  transition:all 300ms;
-}
-.btn-ghost:hover{border-color:#b8965a;color:#d4aa6a;transform:translateY(-2px)}
-
-@keyframes fadeUp{from{opacity:0;transform:translateY(32px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
-@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
-@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+@keyframes marquee-x{from{transform:translateX(0)}to{transform:translateX(-33.333%)}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
 @keyframes spin-slow{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
-@keyframes pulse-gold{0%,100%{box-shadow:0 0 0 0 rgba(184,150,90,0.4)}50%{box-shadow:0 0 0 16px rgba(184,150,90,0)}}
+@keyframes blob{0%,100%{border-radius:60% 40% 30% 70%/60% 30% 70% 40%}50%{border-radius:30% 60% 70% 40%/50% 60% 30% 60%}}
+@keyframes gradShift{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
 
-.animate-fadeup{animation:fadeUp 0.9s cubic-bezier(0.16,1,0.3,1) both}
-.delay-1{animation-delay:0.15s}
-.delay-2{animation-delay:0.3s}
-.delay-3{animation-delay:0.45s}
-.delay-4{animation-delay:0.6s}
+.au{animation:fadeUp 0.85s cubic-bezier(0.16,1,0.3,1) both}
+.d1{animation-delay:0.1s}.d2{animation-delay:0.22s}.d3{animation-delay:0.34s}.d4{animation-delay:0.46s}.d5{animation-delay:0.58s}
 
 @media(prefers-reduced-motion:reduce){*{animation-duration:0.01ms!important;transition-duration:0.01ms!important}}

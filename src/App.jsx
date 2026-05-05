@@ -1,4 +1,3 @@
-import Cursor from './components/Cursor'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import Ticker from './components/Ticker'
@@ -13,14 +12,13 @@ import Footer from './components/Footer'
 
 export default function App() {
   return (
-    <div style={{background:'#0c0a06'}}>
-      <Cursor />
+    <div style={{background:'#fefcf8'}}>
       <Navbar />
       <main>
         <Hero />
         <Ticker />
-        <Stats />
         <Services />
+        <Stats />
         <Portfolio />
         <Process />
         <About />
