@@ -1,142 +1,108 @@
-import { useEffect, useRef } from 'react'
 import { MessageCircle, Mail, ArrowUpRight } from 'lucide-react'
 
-const info = [
-  { label: 'Based in',      value: 'Jakarta, Indonesia' },
-  { label: 'Response',      value: 'Under 24 hours'     },
-  { label: 'Engagement',    value: 'Project-based'      },
-  { label: 'Languages',     value: 'ID & EN'             },
-]
-
 export default function CTA() {
-  const ref = useRef(null)
-  useEffect(() => {
-    const el = ref.current
-    if (!el) return
-    const obs = new IntersectionObserver(entries => {
-      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target) } })
-    }, { threshold: 0.1 })
-    el.querySelectorAll('.reveal').forEach(r => obs.observe(r))
-    return () => obs.disconnect()
-  }, [])
-
   return (
     <>
       <style>{`
-        .cta-section {
-          padding: clamp(6rem, 14vw, 12rem) 0;
-          background: #08070a;
-          border-top: 1px solid rgba(240,237,232,0.05);
-          position: relative;
-          overflow: hidden;
+        .cta-section{
+          padding:clamp(6rem,12vw,10rem) 0;
+          background:radial-gradient(ellipse 80% 60% at 50% 100%,#1a1208 0%,#0c0a06 60%);
+          border-top:1px solid rgba(184,150,90,0.1);
+          position:relative;overflow:hidden;
         }
-        .cta-bg {
-          position: absolute;
-          inset: 0;
-          background: radial-gradient(ellipse 70% 50% at 50% 40%, rgba(201,169,110,0.07) 0%, transparent 65%);
-          pointer-events: none;
+        .cta-glow{
+          position:absolute;top:50%;left:50%;
+          transform:translate(-50%,-50%);
+          width:600px;height:400px;
+          background:radial-gradient(ellipse,rgba(184,150,90,0.08) 0%,transparent 65%);
+          pointer-events:none;
         }
-        .cta-inner {
-          position: relative;
-          z-index: 1;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          text-align: center;
-          gap: 1.5rem;
-          max-width: 700px;
-          margin-inline: auto;
+        .cta-inner{
+          position:relative;z-index:1;
+          display:flex;flex-direction:column;
+          align-items:center;text-align:center;
+          gap:1rem;max-width:700px;margin-inline:auto;
         }
-        .cta-h2 {
-          font-family: 'Cormorant Garamond', Georgia, serif;
-          font-size: clamp(2.5rem, 1rem + 5.5vw, 6.5rem);
-          font-weight: 300;
-          line-height: 0.95;
-          letter-spacing: -0.035em;
-          color: #f0ede8;
+        .cta-h2{
+          font-family:'Cormorant Garamond',Georgia,serif;
+          font-size:clamp(2.5rem,1.5rem + 4vw,6rem);
+          font-weight:300;line-height:0.95;
+          color:#faf8f3;
         }
-        .cta-h2 em {
-          font-style: italic;
-          background: linear-gradient(135deg, #f0c96e 0%, #c9a96e 50%, #8a6030 100%);
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          background-clip: text;
+        .cta-h2 em{font-style:italic}
+        .cta-h2 .shimmer-text{
+          background:linear-gradient(120deg,#b8965a 0%,#f0d080 40%,#b8965a 60%,#d4aa6a 100%);
+          background-size:200% auto;
+          -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+          animation:shimmer 3s linear infinite;
         }
-        .cta-desc {
-          font-size: clamp(1rem, 0.9rem + 0.4vw, 1.15rem);
-          color: rgba(240,237,232,0.45);
-          max-width: 42ch;
-          font-weight: 300;
-          line-height: 1.9;
+        .cta-sub{
+          font-family:'DM Sans',system-ui,sans-serif;
+          font-size:clamp(0.95rem,0.88rem + 0.35vw,1.15rem);
+          color:rgba(232,224,208,0.5);
+          max-width:42ch;line-height:1.85;
+          font-weight:300;margin-top:0.5rem;
         }
-        .cta-btns {
-          display: flex;
-          flex-wrap: wrap;
-          gap: 1rem;
-          justify-content: center;
-          margin-top: 0.5rem;
+        .cta-btns{display:flex;flex-wrap:wrap;gap:0.75rem;justify-content:center;margin-top:1rem}
+        .cta-meta{
+          display:flex;flex-wrap:wrap;gap:1rem;justify-content:center;
+          margin-top:3rem;padding-top:3rem;
+          border-top:1px solid rgba(184,150,90,0.1);
+          width:100%;
         }
-        .cta-info {
-          display: flex;
-          flex-wrap: wrap;
-          gap: 1px;
-          justify-content: center;
-          background: rgba(240,237,232,0.05);
-          border-radius: 8px;
-          overflow: hidden;
-          width: 100%;
-          margin-top: 2rem;
+        .cta-meta-item{
+          display:flex;flex-direction:column;gap:0.25rem;
+          padding:1.25rem 1.75rem;
+          border:1px solid rgba(184,150,90,0.12);
+          border-radius:14px;
+          background:rgba(184,150,90,0.04);
+          text-align:center;min-width:130px;
         }
-        .info-item {
-          flex: 1;
-          min-width: 110px;
-          background: #0d0c10;
-          padding: 1.5rem 1rem;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          gap: 0.3rem;
+        .meta-label{
+          font-family:'DM Sans',system-ui,sans-serif;
+          font-size:0.62rem;font-weight:600;
+          letter-spacing:0.12em;text-transform:uppercase;
+          color:rgba(184,150,90,0.5);
         }
-        .info-lbl {
-          font-size: 0.6rem;
-          font-weight: 600;
-          letter-spacing: 0.14em;
-          text-transform: uppercase;
-          color: #c9a96e;
-        }
-        .info-val {
-          font-family: 'Cormorant Garamond', Georgia, serif;
-          font-size: clamp(0.95rem, 0.85rem + 0.4vw, 1.2rem);
-          font-weight: 500;
-          color: #f0ede8;
+        .meta-val{
+          font-family:'Cormorant Garamond',Georgia,serif;
+          font-size:clamp(1rem,0.9rem + 0.4vw,1.2rem);
+          font-weight:500;color:rgba(232,224,208,0.8);
         }
       `}</style>
 
-      <section id="contact" className="cta-section" ref={ref}>
-        <div className="cta-bg" aria-hidden="true" />
+      <section id="contact" className="cta-section">
+        <div className="cta-glow" aria-hidden="true"/>
         <div className="wrap">
           <div className="cta-inner">
-            <span className="eyebrow reveal">Start a Project</span>
-            <h2 className="cta-h2 reveal reveal-delay-1">
-              Ready to build<br />
-              <em>something remarkable?</em>
+            <span className="eyebrow">Start a Project</span>
+            <h2 className="cta-h2">
+              Ready to build<br/>
+              <span className="shimmer-text"><em>something exceptional?</em></span>
             </h2>
-            <p className="cta-desc reveal reveal-delay-2">
-              For founders and teams that need a premium software partner. Let us talk about what you are building.
+            <span className="gold-line" style={{margin:'0.25rem auto'}}/>
+            <p className="cta-sub">
+              For founders and enterprises that need a premium software partner.
+              Let us talk about what you are building.
             </p>
-            <div className="cta-btns reveal reveal-delay-3">
-              <a href="https://wa.me/6285159611202" target="_blank" rel="noopener noreferrer" className="btn-glow">
-                <MessageCircle size={16} /> Chat on WhatsApp
+            <div className="cta-btns">
+              <a href="https://wa.me/6285159611202" target="_blank" rel="noopener noreferrer" className="btn-gold">
+                <MessageCircle size={16}/> Chat on WhatsApp
               </a>
               <a href="mailto:hello@hyvaroolabs.com" className="btn-ghost">
-                <Mail size={16} /> Send an Email
+                <Mail size={16}/> Send an Email
               </a>
             </div>
-            <div className="cta-info reveal reveal-delay-4">
-              {info.map(({ label, value }) => (
-                <div key={label} className="info-item">
-                  <span className="info-lbl">{label}</span>
-                  <span className="info-val">{value}</span>
+            <div className="cta-meta">
+              {[
+                {l:'Based in',v:'Jakarta, Indonesia'},
+                {l:'Response',v:'Under 24 hours'},
+                {l:'Engagement',v:'Project-based'},
+                {l:'Language',v:'ID \u0026 EN'},
+              ].map(({l,v})=>(
+                <div key={l} className="cta-meta-item">
+                  <span className="meta-label">{l}</span>
+                  <span className="meta-val">{v}</span>
                 </div>
               ))}
             </div>

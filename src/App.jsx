@@ -1,24 +1,30 @@
+import Cursor from './components/Cursor'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import Ticker from './components/Ticker'
 import Services from './components/Services'
+import Stats from './components/Stats'
 import Portfolio from './components/Portfolio'
-import Manifesto from './components/Manifesto'
-import WhyUs from './components/WhyUs'
+import Process from './components/Process'
+import About from './components/About'
+import Tech from './components/Tech'
 import CTA from './components/CTA'
 import Footer from './components/Footer'
 
 export default function App() {
   return (
-    <div style={{ background: '#08070a', minHeight: '100dvh' }}>
+    <div style={{background:'#0c0a06'}}>
+      <Cursor />
       <Navbar />
       <main>
         <Hero />
         <Ticker />
+        <Stats />
         <Services />
         <Portfolio />
-        <Manifesto />
-        <WhyUs />
+        <Process />
+        <About />
+        <Tech />
         <CTA />
       </main>
       <Footer />
